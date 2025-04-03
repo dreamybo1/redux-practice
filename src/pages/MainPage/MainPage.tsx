@@ -1,16 +1,24 @@
 import { useSelector } from "react-redux";
 import styles from "./style.module.scss";
 import { postsSelector } from "@/shared/slices/posts/postsSlice";
-import { useDeletePostMutation, useEditPostMutation, useGetPostsQuery } from "@/shared/api/postsApi";
+import {
+  useCreatePostMutation,
+  useDeletePostMutation,
+  useEditPostMutation,
+  useGetPostsQuery
+} from "@/shared/api/postsApi";
 import { Post } from "@/shared/types/jsonplaceholder";
+import { useEffect } from "react";
+import { postsInitialMock } from "@/entities/model/posts";
 
 function MainPage() {
   useGetPostsQuery();
   const [editTitle] = useEditPostMutation();
   const [deletePost] = useDeletePostMutation();
+  const [createPost] = useCreatePostMutation();
   const { posts, loading, error } = useSelector(postsSelector);
 
-  const handleDelete = (id: number) => {
+  const handleDelete = (id: string) => {
     deletePost(id);
   };
 
@@ -20,6 +28,16 @@ function MainPage() {
       editTitle({ ...post, title: newTitle });
     }
   };
+
+  useEffect(() => {
+    if (posts.length === 1) {
+      Promise.all(
+        postsInitialMock.map(post => {
+          createPost(post);
+        })
+      );
+    }
+  }, [posts]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;

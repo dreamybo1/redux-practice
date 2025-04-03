@@ -57,6 +57,17 @@ export const postsSlice = createSlice({
       .addMatcher(postsApi.endpoints.deletePost.matchRejected, (state, action) => {
         state.error = action.error.message || null;
         state.loading = false;
+      })
+      .addMatcher(postsApi.endpoints.createPost.matchFulfilled, (state, action) => {
+        state.loading = false;
+        state.posts.push(action.payload);
+      })
+      .addMatcher(postsApi.endpoints.createPost.matchPending, state => {
+        state.loading = true;
+      })
+      .addMatcher(postsApi.endpoints.createPost.matchRejected, (state, action) => {
+        state.error = action.error.message || null;
+        state.loading = false;
       });
   }
 });

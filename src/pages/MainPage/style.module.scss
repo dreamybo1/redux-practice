@@ -1,0 +1,51 @@
+.array {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+
+
+    & button {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+
+        &:hover {
+            background-color: red;
+            cursor: pointer;
+        }
+    }
+}
+
+.post {
+    width: 100%;
+    font-size: 14px;
+    color: black;
+    font-weight: 700;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: white;
+    border: 2px black solid;
+    padding: 10px;
+    position: relative;
+
+    &:hover {
+        background-color: lightgrey;
+    }
+}
+
+.title {
+    display: flex;
+    gap: 10px;
+
+    & a {
+        color: blue;
+
+        &:hover {
+            color: red;
+            cursor: pointer;
+        }
+    }
+}
